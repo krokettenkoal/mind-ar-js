@@ -2,12 +2,21 @@
   "name": "mind-ar",
   "version": "1.2.5",
   "description": "web augmented reality framework",
-  "main": "index.js",
+  "private": true,
+  "bin": "compiler-sea/src/mindar-compile.js",
+  "pkg": {
+    "scripts": "compiler-sea/src/*.js",
+    "outputPath": "compiler-sea/dist"
+  },
   "scripts": {
     "dev": "vite --config vite.config.dev.js --host",
     "watch": "vite build --watch --config vite.config.dev.js",
     "build-dev": "vite build --config vite.config.dev.js",
-    "build": "vite build --config vite.config.prod.js"
+    "build": "vite build --config vite.config.prod.js",
+    "bundle:compiler": "cd compiler-sea && webpack --config webpack.config.cjs",
+    "sea:compiler": "cd compiler-sea/sea && node build-sea.cjs",
+    "build:compiler": "npm run bundle:compiler && npm run sea:compiler",
+    "test:compiler": "cd compiler-sea/dist && node compiler.bundle.cjs -i test.png -o test.mind"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -32,8 +41,10 @@
     "@mediapipe/tasks-vision": "^0.10.9",
     "@msgpack/msgpack": "^2.8.0",
     "@tensorflow/tfjs": "^4.16.0",
+    "@tensorflow/tfjs-node": "^4.21.0",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
-    "canvas": "^2.10.2",
+    "canvas": "^3.0.0-rc2",
+    "commander": "^12.1.0",
     "mathjs": "^11.6.0",
     "ml-matrix": "^6.10.4",
     "svd-js": "^1.1.1",
@@ -47,6 +58,15 @@
     "src/"
   ],
   "devDependencies": {
-    "vite": "^5.0.11"
+    "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "command-exists": "^1.2.9",
+    "native-ext-loader": "^2.3.0",
+    "node-bindings-loader": "^1.5.0",
+    "node-loader": "^2.0.0",
+    "postject": "^1.0.0-alpha.6",
+    "vite": "^5.0.11",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }
